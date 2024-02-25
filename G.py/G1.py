@@ -28,4 +28,7 @@ class App:
 
             #time
             self.clock.tick(60)
-             
+        self.quit()
+
+    def quit(self):
+        pg.quit() 
