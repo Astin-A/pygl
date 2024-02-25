@@ -1,5 +1,6 @@
 import pygame as pg
 from OpenGL.GL import *
+from OpenGL.GL.shaders import compileProgram, compileShader
 import numpy as np
 import ctypes
 
@@ -15,8 +16,27 @@ class App:
         #init opengl
         # glClearColor(0.1, 0.2, 0.2, 1)
         glClearColor(1, 0.2, 0.2, 1)
+        self.shader = self.creatShader("shaders/vertex.vert", "shaders/fragment.frag")
+        glUseProgram(self.shader)
+        self.triangle = Tri()
         self.mainLoop()
     
+
+    def creatShader(self, vertexFilePath, fragmentFilePath):
+
+        with open(vertexFilePath, 'r') as v:
+            vertex_src = v.readlines()
+
+        with open(fragmentFilePath, 'r') as f:
+            fragment_src = f.readlines()
+
+        shader = compileProgram(
+            compileShader(vertex_src, GL_VERTEX_SHADER),
+            compileShader(fragment_src, GL_FRAGMENT_SHADER)
+        )
+
+        return shader
+
 
     def mainLoop(self):
         running = True
