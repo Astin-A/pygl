@@ -15,8 +15,8 @@ class App:
         self.clock = pg.time.Clock()
         #init opengl
         # glClearColor(0.1, 0.2, 0.2, 1)
-        glClearColor(1, 0.2, 0.2, 1)
-        self.shader = self.creatShader("shaders/vertex.vert", "shaders/fragment.frag")
+        glClearColor(0.1, 0.2, 0.2, 1)
+        self.shader = self.creatShader("G.py/shaders/vertex.vert", "G.py/shaders/fragment.frag")
         glUseProgram(self.shader)
         self.triangle = Tri()
         self.mainLoop()
@@ -47,6 +47,11 @@ class App:
                     running = False
             #refresh screen
             glClear(GL_COLOR_BUFFER_BIT)
+
+            glUseProgram(self.shader)
+            glBindVertexArray(self.triangle.vao)
+            glDrawArrays(GL_TRIANGLES, 0, self.triangle.vertex_count)
+
             pg.display.flip()
 
             #time
@@ -54,6 +59,8 @@ class App:
         self.quit()
 
     def quit(self):
+        self.triangle.destroy()
+        glDeleteProgram(self.shader)
         pg.quit() 
 
 
@@ -75,7 +82,7 @@ class Tri:
         self.vao = glGenVertexArrays(1)
         glBindVertexArray(self.vao)
         self.vbo = glGenBuffers(1)
-        glBindVertexArray(GL_ARRAY_BUFFER, self.vbo)
+        glBindBuffer(GL_ARRAY_BUFFER, self.vbo)
         glBufferData(GL_ARRAY_BUFFER, self.vertices.nbytes, self.vertices, GL_STATIC_DRAW)
         glEnableVertexAttribArray(0)
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(0))
