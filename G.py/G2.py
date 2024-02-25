@@ -62,7 +62,10 @@ class Tri:
         glEnableVertexAttribArray(1)
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
 
-    
+    def destroy(self):
+
+        glDeleteVertexArrays(1, (self.vao,))
+        glDeleteBuffers(1, (self.vbo,))
 
 
 if __name__ == "__main__":
