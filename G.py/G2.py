@@ -1,6 +1,7 @@
 import pygame as pg
 from OpenGL.GL import *
 import numpy as np
+import ctypes
 
 
 class App:
@@ -56,6 +57,12 @@ class Tri:
         self.vbo = glGenBuffers(1)
         glBindVertexArray(GL_ARRAY_BUFFER, self.vbo)
         glBufferData(GL_ARRAY_BUFFER, self.vertices.nbytes, self.vertices, GL_STATIC_DRAW)
+        glEnableVertexAttribArray(0)
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(0))
+        glEnableVertexAttribArray(1)
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 24, ctypes.c_void_p(12))
+
+    
 
 
 if __name__ == "__main__":
