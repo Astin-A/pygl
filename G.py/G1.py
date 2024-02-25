@@ -20,7 +20,7 @@ class App:
         while (running):
             #check events 
             for event in pg.event.get():
-                if (event.type == pg.quit):
+                if (event.type == pg.QUIT):
                     running = False
             #refresh screen
             glClear(GL_COLOR_BUFFER_BIT)
@@ -32,3 +32,8 @@ class App:
 
     def quit(self):
         pg.quit() 
+
+    
+if __name__ == "__main__":
+    myApp = App()
+
