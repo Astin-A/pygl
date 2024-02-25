@@ -1,5 +1,6 @@
 import pygame as pg
 from OpenGL.GL import *
+import numpy as np
 
 
 class App:
@@ -14,7 +15,7 @@ class App:
         # glClearColor(0.1, 0.2, 0.2, 1)
         glClearColor(1, 0.2, 0.2, 1)
         self.mainLoop()
-
+    
 
     def mainLoop(self):
         running = True
@@ -34,7 +35,29 @@ class App:
     def quit(self):
         pg.quit() 
 
-    
+
+class Tri:
+
+
+    def __init__(self):
+
+        #x, y, z, r, g, b
+        self.vertices = (
+            -0.5, -0.5, 0.0, 1.0, 0.0, 0.0,
+             0.5, -0.5, 0.0, 0.0, 1.0, 0.0,
+             0.0,  0.5, 0.0, 0.0, 0.0, 1.0
+        )
+        self.vertices = np.array(self.vertices, dtype=np.float32)
+
+        self.vertex_count = 3
+
+        self.vao = glGenVertexArrays(1)
+        glBindVertexArray(self.vao)
+        self.vbo = glGenBuffers(1)
+        glBindVertexArray(GL_ARRAY_BUFFER, self.vbo)
+        glBufferData(GL_ARRAY_BUFFER, self.vertices.nbytes, self.vertices, GL_STATIC_DRAW)
+
+
 if __name__ == "__main__":
     myApp = App()
 
