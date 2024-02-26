@@ -14,9 +14,8 @@ class App:
         pg.display.set_mode((640, 480), pg.OPENGL|pg.DOUBLEBUF)
         self.clock = pg.time.Clock()
         #init opengl
-        # glClearColor(0.1, 0.2, 0.2, 1)
         glClearColor(0.1, 0.2, 0.2, 1)
-        self.shader = self.creatShader("Texturs/shaders/vert.vert", "Texturs/shaders/frag.frag")
+        self.shader = self.creatShader("Texturs/shaders/vert.vert", "Texturs/shaders/frag   .frag")
         glUseProgram(self.shader)
         self.triangle = Tri()
         self.mainLoop()
@@ -94,6 +93,19 @@ class Tri:
         glDeleteVertexArrays(1, (self.vao,))
         glDeleteBuffers(1, (self.vbo,))
 
+
+class Material:
+
+    def __init__(self, filePath):
+        
+        self.texture = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, self.texture)
+        glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+        glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+        glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+        glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+
+        
 
 if __name__ == "__main__":
     myApp = App()
