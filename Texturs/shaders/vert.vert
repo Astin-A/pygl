@@ -5,7 +5,7 @@ layout (location=1) in vec3 vertexColor;
 layout (location=2) in vec2 vertexTexCoord;
 
 out vec3 fragmentColor;
-out vec3 fragmentTexCoord;
+out vec2 fragmentTexCoord;
 
 void main()
 {
