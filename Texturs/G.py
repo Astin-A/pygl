@@ -104,8 +104,14 @@ class Material:
         glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
         glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
         glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-
+        image = pg.image.load(filePath).convert()
+        image_with, image_hight = image.get_rect().size()
+        image_data = pg.image.tostring(image, "RGBA")
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_with, image_hight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data)
+        glGenerateMipmap(GL_TEXTURE_2D)
         
+
+
 
 if __name__ == "__main__":
     myApp = App()
