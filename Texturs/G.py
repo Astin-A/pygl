@@ -17,7 +17,9 @@ class App:
         glClearColor(0.1, 0.2, 0.2, 1)
         self.shader = self.creatShader("Texturs/shaders/vert.vert", "Texturs/shaders/frag   .frag")
         glUseProgram(self.shader)
+        glUniform1i(glGetUniformLocation(self.shader, "imageTexture"), 0)
         self.triangle = Tri()
+        self.wood_texture = Material("Texturs/textur/wood.jpeg")
         self.mainLoop()
     
 
