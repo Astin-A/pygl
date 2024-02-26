@@ -115,6 +115,9 @@ class Material:
         glActiveTexture(GL_TEXTURE0)
         glBindTexture(GL_TEXTURE_2D, self.texture)
 
+    def destroy(self):
+        glDeleteTextures(1, (self.texture,))
+
 
 
 
