@@ -50,6 +50,7 @@ class App:
             glClear(GL_COLOR_BUFFER_BIT)
 
             glUseProgram(self.shader)
+            self.wood_texture.use()
             glBindVertexArray(self.triangle.vao)
             glDrawArrays(GL_TRIANGLES, 0, self.triangle.vertex_count)
 
@@ -61,6 +62,7 @@ class App:
 
     def quit(self):
         self.triangle.destroy()
+        self.wood_texture.destroy()
         glDeleteProgram(self.shader)
         pg.quit() 
 
