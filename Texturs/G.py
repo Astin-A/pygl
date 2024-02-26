@@ -15,11 +15,14 @@ class App:
         self.clock = pg.time.Clock()
         #init opengl
         glClearColor(0.1, 0.2, 0.2, 1)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         self.shader = self.creatShader("Texturs/shaders/vert.vert", "Texturs/shaders/frag.frag")
         glUseProgram(self.shader)
         glUniform1i(glGetUniformLocation(self.shader, "imageTexture"), 0)
         self.triangle = Tri()
-        self.wood_texture = Material("Texturs/textur/wood.jpeg")
+        # self.wood_texture = Material("Texturs/textur/wood.jpeg")
+        self.wood_texture = Material("Texturs/textur/cat.png")
         self.mainLoop()
     
 
@@ -110,7 +113,7 @@ class Material:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-        image = pg.image.load(filePath).convert()
+        image = pg.image.load(filePath).convert_alpha()
         image_with, image_hight = image.get_rect().size
         image_data = pg.image.tostring(image, "RGBA")
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_with, image_hight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data)
