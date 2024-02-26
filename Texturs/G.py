@@ -109,7 +109,12 @@ class Material:
         image_data = pg.image.tostring(image, "RGBA")
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_with, image_hight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data)
         glGenerateMipmap(GL_TEXTURE_2D)
-        
+
+
+    def use(self):
+        glActiveTexture(GL_TEXTURE0)
+        glBindTexture(GL_TEXTURE_2D, self.texture)
+
 
 
 
