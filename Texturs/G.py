@@ -15,7 +15,7 @@ class App:
         self.clock = pg.time.Clock()
         #init opengl
         glClearColor(0.1, 0.2, 0.2, 1)
-        self.shader = self.creatShader("Texturs/shaders/vert.vert", "Texturs/shaders/frag   .frag")
+        self.shader = self.creatShader("Texturs/shaders/vert.vert", "Texturs/shaders/frag.frag")
         glUseProgram(self.shader)
         glUniform1i(glGetUniformLocation(self.shader, "imageTexture"), 0)
         self.triangle = Tri()
@@ -106,12 +106,12 @@ class Material:
         
         self.texture = glGenTextures(1)
         glBindTexture(GL_TEXTURE_2D, self.texture)
-        glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
-        glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
-        glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
-        glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         image = pg.image.load(filePath).convert()
-        image_with, image_hight = image.get_rect().size()
+        image_with, image_hight = image.get_rect().size
         image_data = pg.image.tostring(image, "RGBA")
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_with, image_hight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data)
         glGenerateMipmap(GL_TEXTURE_2D)
