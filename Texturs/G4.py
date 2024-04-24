@@ -66,7 +66,8 @@ class App:
         self._set_onetime_uniforms()
 
         self._get_uniform_locations()
-    
+
+
     def _set_up_pygame(self) -> None:
 
         pg.init()
@@ -91,7 +92,7 @@ class App:
             position = [0,0,-3],
             eulers = [0,0,0]
         )
-        self.cube_mesh = CubeMesh()
+        self.cube_mesh = Mesh("Texturs/models/cube.obj")
         self.wood_texture = Material("Texturs/textur/wood.jpeg")
         self.shader = create_shader(
             vertex_filepath = "Texturs/shaders/vert.vert", 
@@ -234,6 +235,44 @@ class CubeMesh:
 
     def destroy(self) -> None:
 
+        glDeleteVertexArrays(1,(self.vao,))
+        glDeleteBuffers(1,(self.vbo,))
+
+class Mesh:
+
+    def __init__(self, filename: str):
+        # x, y, z, s, t, nx, ny, nz
+        vertices = self.load_mesh(filename)
+        self.vertex_count = len(vertices)//8
+        vertices = np.array(vertices, dtype=np.float32)
+
+        self.vao = glGenVertexArrays(1)
+        glBindVertexArray(self.vao)
+
+        #Vertices
+        self.vbo = glGenBuffers(1)
+        glBindBuffer(GL_ARRAY_BUFFER, self.vbo)
+        glBufferData(GL_ARRAY_BUFFER, vertices.nbytes, vertices, GL_STATIC_DRAW)
+        #position
+        glEnableVertexAttribArray(0)
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 32, ctypes.c_void_p(0))
+        #texture
+        glEnableVertexAttribArray(1)
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 32, ctypes.c_void_p(12))
+    
+    def load_mesh(self, filename: str) -> list[float]:
+        with open (filename, "r") as file: 
+            line = file.readline()
+            while line:
+                words = line.split(" ")
+                if words[0] == 'v':
+                    print(f"{line} is a veryex line")
+                line = file.readline()
+        
+        return []
+
+    def destroy(self) -> None:
+        
         glDeleteVertexArrays(1,(self.vao,))
         glDeleteBuffers(1,(self.vbo,))
 
